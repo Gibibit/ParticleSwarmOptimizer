@@ -2,7 +2,7 @@
 
 namespace ParticleSwarmOptimizer
 {
-    public static class Mathf
+    internal static class Mathf
     {
         public static float Clamp(float value, float min, float max)
         {
@@ -14,7 +14,6 @@ namespace ParticleSwarmOptimizer
 
     public class Swarm
     {
-
         public delegate float Heuristic(float[] values);
 
         private readonly int _dimension;
@@ -28,7 +27,7 @@ namespace ParticleSwarmOptimizer
         private float[] _gbest;
         private float _gbestFitness;
 
-        private const float MAX_VELOCITY_PERCENTAGE = 0.2f;
+        private const float MAX_VELOCITY_PERCENTAGE = 1f;
         private float[] _maxVelocity;
         
         private const float C1 = 2f;
@@ -37,7 +36,6 @@ namespace ParticleSwarmOptimizer
         private Heuristic _heuristic;
 
         private Random _random;
-        
 
         /// <summary>
         /// Creates a new Particle Swarm object
@@ -56,10 +54,6 @@ namespace ParticleSwarmOptimizer
             }
 
             _resolution = resolution;
-            _values = new float[particles][];
-            _velocity = new float[particles][];
-            _pbest = new float[particles][];
-            _gbest = new float[dimension];
             _heuristic = heuristic;
 
             _random = random ?? new Random();
@@ -67,8 +61,18 @@ namespace ParticleSwarmOptimizer
 
         private void InitValues()
         {
+            _values = new float[_particles][];
+            _velocity = new float[_particles][];
+            _pbest = new float[_particles][];
+            _pbestFitness = new float[_particles];
+            _gbest = new float[_dimension];
+            _maxVelocity = new float[_dimension];
+
             for(int particle = 0; particle < _particles; ++particle) {
                 _values[particle] = new float[_dimension];
+                _velocity[particle] = new float[_dimension];
+                _pbest[particle] = new float[_dimension];
+
                 for(int dimension = 0; dimension < _dimension; ++dimension) {
                     _values[particle][dimension] = (float) _random.NextDouble()*(_resolution[dimension].Item2 - _resolution[dimension].Item1) + _resolution[dimension].Item1;
                     _velocity[particle][dimension] = 0f;
@@ -77,7 +81,7 @@ namespace ParticleSwarmOptimizer
             }
         }
 
-        public void Run(int iterations)
+        public OptimizationResult Run(int iterations, float? fitnessRequirement)
         {
             InitValues();
 
@@ -93,6 +97,8 @@ namespace ParticleSwarmOptimizer
                     if (fitness > _gbestFitness) {
                         _values[particle].CopyTo(_gbest, 0);
                         _gbestFitness = fitness;
+                        if(_gbestFitness >= fitnessRequirement)
+                            return new OptimizationResult(_gbest, iter + 1);
                     }
                 }
 
@@ -114,8 +120,20 @@ namespace ParticleSwarmOptimizer
                     }
                 }
             }
-
+            return new OptimizationResult(_gbest, iterations);
         }
 
+    }
+
+    public struct OptimizationResult
+    {
+        public float[] Values;
+        public int Iterations;
+
+        public OptimizationResult(float[] values, int iterations)
+        {
+            Values = values;
+            Iterations = iterations;
+        }
     }
 }

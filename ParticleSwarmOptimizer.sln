@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticleSwarmOptimizer", "ParticleSwarmOptimizer\ParticleSwarmOptimizer.csproj", "{0BC069F0-D4C1-4E4B-996B-D38442E6EAED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticleSwarmTest", "ParticleSwarmTest\ParticleSwarmTest.csproj", "{B1D77731-95D3-4507-8258-B7E7D188FD91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0BC069F0-D4C1-4E4B-996B-D38442E6EAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BC069F0-D4C1-4E4B-996B-D38442E6EAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BC069F0-D4C1-4E4B-996B-D38442E6EAED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1D77731-95D3-4507-8258-B7E7D188FD91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1D77731-95D3-4507-8258-B7E7D188FD91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1D77731-95D3-4507-8258-B7E7D188FD91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1D77731-95D3-4507-8258-B7E7D188FD91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
